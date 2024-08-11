@@ -47,6 +47,13 @@ router.addRoute({
   component: SPGEQLQ99999
 })
 
+// @ts-ignore
+const SPGEQLQ50000 = defineAsyncComponent(() => import('ql_q_newbusiness_ui/test/SPGEQLQ50000'))
+router.addRoute({
+  path: '/test/SPGEQLQ50000',
+  name: 'SPGEQLQ50000',
+  component: SPGEQLQ50000
+})
 </script>
 
 <template>
@@ -58,6 +65,7 @@ router.addRoute({
       <li><RouterLink to="/SPGEFWZ99999">FWZ - RemotePage2</RouterLink></li>
       <li><RouterLink to="/SPGEQLQ00001">QLQ - RemotePage1</RouterLink></li>
       <li><RouterLink to="/SPGEQLQ99999">QLQ - RemotePage2</RouterLink></li>
+      <li><RouterLink to="/test/SPGEQLQ50000">QLQ - RemotePage3</RouterLink></li>
     </ul>
   </header>
 
