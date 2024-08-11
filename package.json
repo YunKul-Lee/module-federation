@@ -1,0 +1,11 @@
+{
+  "name": "module-federation",
+  "version": "1.0.0",
+  "description": "Micro Frontend Vue Example",
+  "private": true,
+  "scripts": {
+    "test": "echo test"
+  },
+  "workspaces": ["packages/*"],
+  "packageManager": "pnpm@9.7.0"
+}
