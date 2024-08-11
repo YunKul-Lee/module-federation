@@ -13,7 +13,7 @@ export default defineConfig({
       name: 'host-app',
       remotes: {
         fw_z_meta_ui: 'http://localhost:4100/fw/z/meta/ui/assets/remoteEntry.js',
-        // remote_app: 'http://localhost:4173/fw/z/meta/ui/assets/remoteEntry.js',
+        ql_q_newbusiness_ui: 'http://localhost:4200/ql/q/newbusiness/ui/assets/remoteEntry.js',
       },
       shared: ['vue', 'vue-router', 'pinia']
     })
