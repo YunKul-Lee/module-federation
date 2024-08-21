@@ -2,6 +2,9 @@
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { defineAsyncComponent } from 'vue'
 
+//@ts-ignore
+import { __federation_method_getRemote, __federation_method_wrapDefault } from 'virtual:__federation__'
+
 // 로컬 페이지 컴포넌트 dynamic import
 const router = useRouter()
 router.addRoute({
@@ -20,8 +23,14 @@ router.addRoute({
 })
 
 // 리모트 페이지 컴포넌트 (SPGEFWZ99999) dynamic import
+
+const pageId = 'SPGEFWZ99999'
 // @ts-ignore
-const SPGEFWZ99999 = defineAsyncComponent(() => import('fw_z_meta_ui/SPGEFWZ99999'))
+// const SPGEFWZ99999 = defineAsyncComponent(() => import("fw_z_meta_ui/*"))
+
+const SPGEFWZ99999 = defineAsyncComponent(() => __federation_method_getRemote("fw_z_meta_ui", `./${pageId}`).then((module) => __federation_method_wrapDefault(module, true)));
+
+// const SPGEFWZ99999 = defineAsyncComponent(() => import('fw_z_meta_ui/SPGEFWZ99999'))
 router.addRoute({
   path: '/SPGEFWZ99999',
   name: 'SPGEFWZ99999',
