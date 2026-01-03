@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 import federation from '@originjs/vite-plugin-federation'
+// @ts-ignore
+import injectResetRemoteEntryPlugin from './src/plugins/injectResetRemoteEntryPlugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,7 +18,8 @@ export default defineConfig({
         ql_q_newbusiness_ui: 'http://localhost:4200/ql/q/newbusiness/ui/assets/remoteEntry.js',
       },
       shared: ['vue', 'vue-router', 'pinia']
-    })
+    }),
+    injectResetRemoteEntryPlugin(),
   ],
   resolve: {
     alias: {
