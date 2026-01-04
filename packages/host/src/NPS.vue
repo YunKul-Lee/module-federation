@@ -3,16 +3,19 @@ import { RouterLink, RouterView, useRouter } from 'vue-router'
 import { defineAsyncComponent } from 'vue'
 
 //@ts-ignore
-import { __federation_method_getRemote, __federation_method_wrapDefault } from 'virtual:__federation__'
+// import { __federation_method_getRemote, __federation_method_wrapDefault } from 'virtual:__federation__'
 
-// 로컬 페이지 컴포넌트 dynamic import
-const onError = (error: Error, retry: () => void, fail: () => void, attempts: number) => {
+// 리모트 컴포넌트 로딩예외에 대한 에러핸들러
+const remoteComponentLoadErrorHandler = (error: Error, retry: () => void, fail: () => void, attempts: number) => {
   if (attempts <= 3) {
-    // 로딩 실패 시 3번까지 재시도 (네트워크 일시적 오류 대응 등)
-    // console.warn(`Retrying component load... (Attempt ${attempts})`, error)
+    // 로딩 실패 시 3번까지 재시도 (리모트 서비스 재배포, 네트워크 일시적 오류 대응 등)
+    console.warn(`Retrying component load... (Attempt ${attempts})`, error)
 
+    // remotesMap 로딩 초기화
     // @ts-ignore
     window.__RESET_REMOTE_ENTRY__('fw_z_meta_ui')
+
+    // 재시도
     retry()
   } else {
     // 3번 초과 실패 시 실패 처리
@@ -21,6 +24,7 @@ const onError = (error: Error, retry: () => void, fail: () => void, attempts: nu
   }
 }
 
+// 로컬 페이지 컴포넌트 dynamic import
 const router = useRouter()
 router.addRoute({
   path: '/SPGENPS00001',
@@ -49,7 +53,7 @@ const pageId = 'SPGEFWZ99999'
 const SPGEFWZ99999 = defineAsyncComponent({
   // @ts-ignore
   loader: () => import('fw_z_meta_ui/SPGEFWZ99999'),
-  onError
+  onError: remoteComponentLoadErrorHandler
 })
 router.addRoute({
   path: '/SPGEFWZ99999',
