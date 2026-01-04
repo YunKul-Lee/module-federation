@@ -4,7 +4,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 import federation from '@originjs/vite-plugin-federation'
-// @ts-ignore
 import injectResetRemoteEntryPlugin from './src/plugins/injectResetRemoteEntryPlugin'
 
 // https://vitejs.dev/config/
