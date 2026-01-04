@@ -6,6 +6,21 @@ import { defineAsyncComponent } from 'vue'
 import { __federation_method_getRemote, __federation_method_wrapDefault } from 'virtual:__federation__'
 
 // 로컬 페이지 컴포넌트 dynamic import
+const onError = (error: Error, retry: () => void, fail: () => void, attempts: number) => {
+  if (attempts <= 3) {
+    // 로딩 실패 시 3번까지 재시도 (네트워크 일시적 오류 대응 등)
+    // console.warn(`Retrying component load... (Attempt ${attempts})`, error)
+
+    // @ts-ignore
+    window.__RESET_REMOTE_ENTRY__('fw_z_meta_ui')
+    retry()
+  } else {
+    // 3번 초과 실패 시 실패 처리
+    // console.error('Component load failed:', error)
+    fail()
+  }
+}
+
 const router = useRouter()
 router.addRoute({
   path: '/SPGENPS00001',
@@ -28,9 +43,14 @@ const pageId = 'SPGEFWZ99999'
 // @ts-ignore
 // const SPGEFWZ99999 = defineAsyncComponent(() => import("fw_z_meta_ui/*"))
 
-const SPGEFWZ99999 = defineAsyncComponent(() => __federation_method_getRemote("fw_z_meta_ui", `./${pageId}`).then((module) => __federation_method_wrapDefault(module, true)));
+// const SPGEFWZ99999 = defineAsyncComponent(() => __federation_method_getRemote("fw_z_meta_ui", `./${pageId}`).then((module) => __federation_method_wrapDefault(module, true)));
 
 // const SPGEFWZ99999 = defineAsyncComponent(() => import('fw_z_meta_ui/SPGEFWZ99999'))
+const SPGEFWZ99999 = defineAsyncComponent({
+  // @ts-ignore
+  loader: () => import('fw_z_meta_ui/SPGEFWZ99999'),
+  onError
+})
 router.addRoute({
   path: '/SPGEFWZ99999',
   name: 'SPGEFWZ99999',
@@ -80,4 +100,3 @@ router.addRoute({
 
   <RouterView />
 </template>
-
